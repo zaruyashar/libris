@@ -21,6 +21,7 @@ namespace LIBRIS.Models
 
         public required string Isbn { get; set; }
 
-        public virtual ICollection<BorrowRecord> BorrowRecords { get; set; }
+
+        public virtual ICollection<BorrowRecord> BorrowRecords { get; set; } = new List<BorrowRecord>();
     }
 }

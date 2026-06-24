@@ -17,6 +17,7 @@ namespace LIBRIS.Models
 
         public DateTime? CreatedAt { get; set; }
 
-        public virtual ICollection<Book> Books { get; set; }
+
+        public virtual ICollection<Book> Books { get; set; } = new List<Book>();
     }
 }

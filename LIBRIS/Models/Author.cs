@@ -17,6 +17,7 @@ namespace LIBRIS.Models
 
         public bool? IsActive { get; set; }
 
-        public virtual ICollection<Book> Books { get; set; }
+        // Collection Navigation Properties
+        public virtual ICollection<Book> Books { get; set; } = new List<Book>();
     }
 }
