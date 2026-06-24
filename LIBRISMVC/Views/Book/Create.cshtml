@@ -1,0 +1,60 @@
+﻿@using LIBRISMVC.ViewModels
+@model BookViewModel
+@{
+    ViewData["Title"] = "Add Book";
+}
+
+<div class="mt-4 mb-4">
+    <h1 class="h3 fw-bold mb-1" style="color: var(--libris-sidebar-bg);">Add New Book</h1>
+    <a asp-action="Index" class="text-decoration-none text-muted"><i class="fas fa-arrow-left me-1"></i> Back to Directory</a>
+</div>
+
+<div class="card table-card col-lg-8 mb-4">
+    <div class="card-body p-4">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label fw-semibold">Book Title *</label>
+                <input asp-for="Title" class="form-control" required />
+                <span asp-validation-for="Title" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Isbn" class="form-label fw-semibold">ISBN *</label>
+                <input asp-for="Isbn" class="form-control" required />
+                <span asp-validation-for="Isbn" class="text-danger small"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="AuthorId" class="form-label fw-semibold">Author *</label>
+                    <select asp-for="AuthorId" class="form-select" asp-items="ViewBag.Authors" required>
+                        <option value="">-- Select Author --</option>
+                    </select>
+                    <span asp-validation-for="AuthorId" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="GenreId" class="form-label fw-semibold">Genre *</label>
+                    <select asp-for="GenreId" class="form-select" asp-items="ViewBag.Genres" required>
+                        <option value="">-- Select Genre --</option>
+                    </select>
+                    <span asp-validation-for="GenreId" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <hr class="mb-4" style="border-color: var(--libris-border);" />
+
+            <div class="d-flex justify-content-end gap-2">
+                <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Save Book</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

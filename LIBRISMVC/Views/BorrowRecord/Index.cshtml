@@ -1,16 +1,16 @@
 ﻿@using LIBRISMVC.ViewModels
-@model IEnumerable<AuthorViewModel>
+@model IEnumerable<BorrowRecordViewModel>
 @{
-    ViewData["Title"] = "Authors Directory";
+    ViewData["Title"] = "Borrow Records";
 }
 
 <div class="d-flex align-items-start justify-content-between flex-wrap gap-2 mt-4 mb-4">
     <div>
-        <h1 class="h3 fw-bold mb-1" style="color: var(--libris-sidebar-bg);">Authors</h1>
-        <p class="text-muted mb-0">Manage library authors, their nationalities, and active status.</p>
+        <h1 class="h3 fw-bold mb-1" style="color: var(--libris-sidebar-bg);">Borrow Records</h1>
+        <p class="text-muted mb-0">Manage library book circulation and member borrowing history.</p>
     </div>
     <a asp-action="Create" class="btn btn-primary">
-        <i class="fas fa-plus me-2"></i>Add Author
+        <i class="fas fa-plus me-2"></i>New Borrow Record
     </a>
 </div>
 
@@ -20,10 +20,10 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Full Name</th>
-                    <th>Nationality</th>
-                    <th>Birth Year</th>
-                    <th>Status</th>
+                    <th>Book</th>
+                    <th>Member</th>
+                    <th>Borrowed At</th>
+                    <th>Returned At</th>
                     <th class="text-end" data-sortable="false">Actions</th>
                 </tr>
             </thead>
@@ -31,26 +31,26 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td class="text-muted">@item.AuthorId</td>
-                        <td class="fw-medium">@item.FullName</td>
-                        <td>@item.Nationality</td>
-                        <td>@item.BirthYear</td>
+                        <td class="text-muted">@item.BorrowId</td>
+                        <td class="fw-medium">@item.BookTitle</td>
+                        <td>@item.MemberFullName</td>
+                        <td>@item.BorrowedAt.ToString("MMM dd, yyyy")</td>
                         <td>
-                            @if (item.IsActive == true)
+                            @if (item.ReturnedAt.HasValue)
                             {
-                                <span class="status-badge status-active">Active</span>
+                                <span class="text-success fw-medium"><i class="fas fa-check-circle me-1"></i> @item.ReturnedAt.Value.ToString("MMM dd, yyyy")</span>
                             }
                             else
                             {
-                                <span class="status-badge status-inactive">Inactive</span>
+                                <span class="badge bg-warning text-dark">Pending</span>
                             }
                         </td>
                         <td class="text-end">
                             <div class="d-flex justify-content-end gap-2">
-                                <a asp-action="Edit" asp-route-id="@item.AuthorId" class="btn btn-sm btn-outline-primary">
+                                <a asp-action="Edit" asp-route-id="@item.BorrowId" class="btn btn-sm btn-outline-primary">
                                     <i class="fas fa-pen"></i>
                                 </a>
-                                <form asp-action="Delete" asp-route-id="@item.AuthorId" method="post" onsubmit="return confirm('Are you sure you want to delete this author? This action cannot be undone.');" style="display:inline-block;">
+                                <form asp-action="Delete" asp-route-id="@item.BorrowId" method="post" onsubmit="return confirm('Are you sure you want to delete this record? This action cannot be undone.');" style="display:inline-block;">
                                     <button type="submit" class="btn btn-sm btn-outline-danger">
                                         <i class="fas fa-trash"></i>
                                     </button>

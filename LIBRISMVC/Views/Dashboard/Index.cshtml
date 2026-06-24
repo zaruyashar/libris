@@ -1,8 +1,295 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using LIBRISMVC.ViewModels
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    :root {
+        --neon-mint: #2ed573;
+        --neon-forest: #10ac84;
+        --neon-danger: #ff4757;
+        --neon-warning: #ffa502;
+    }
+
+    .kpi-card {
+        border: none;
+        border-radius: 1rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: var(--libris-card-bg);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        overflow: hidden;
+        position: relative;
+    }
+
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(16, 172, 132, 0.2);
+        }
+
+    .kpi-icon-box {
+        width: 60px;
+        height: 60px;
+        border-radius: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+    }
+
+    .icon-books {
+        background: rgba(46, 213, 115, 0.15);
+        color: var(--neon-mint);
+    }
+
+    .icon-members {
+        background: rgba(16, 172, 132, 0.15);
+        color: var(--neon-forest);
+    }
+
+    .icon-borrows {
+        background: rgba(255, 165, 2, 0.15);
+        color: var(--neon-warning);
+    }
+
+    .icon-alerts {
+        background: rgba(255, 71, 87, 0.15);
+        color: var(--neon-danger);
+    }
+
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    .dashboard-header-title {
+        background: -webkit-linear-gradient(45deg, var(--libris-sidebar-bg), var(--neon-forest));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 800;
+    }
+
+    .btn-report {
+        background: linear-gradient(45deg, var(--neon-warning), #ff7f50);
+        color: #ffffff;
+        border: none;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        padding: 0.6rem 1.5rem;
+        border-radius: 50rem; 
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 165, 2, 0.4);
+    }
+
+        .btn-report:hover {
+            background: linear-gradient(45deg, #ffb142, #ff6b22);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(255, 165, 2, 0.6);
+            color: #ffffff;
+        }
+</style>
+
+<div class="d-flex align-items-start justify-content-between flex-wrap gap-2 mt-4 mb-5">
+    <div>
+        <h1 class="h3 mb-1 dashboard-header-title">System Overview</h1>
+        <p class="text-muted mb-0">Welcome back, Admin. Here is what's happening in LIBRIS today.</p>
+    </div>
+    <button id="btnGenerateReport" class="btn btn-report">
+        <i class="fas fa-bolt me-2"></i>Generate Report
+    </button>
 </div>
+
+<div id="dashboard-content">
+    <div class="row mb-5">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card kpi-card h-100 p-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted text-uppercase fw-bold mb-1" style="font-size: 0.8rem;">Total Catalog</p>
+                        <h2 class="fw-bolder mb-0" style="color: var(--libris-text-main);">@Model.TotalCatalog</h2>
+                    </div>
+                    <div class="kpi-icon-box icon-books">
+                        <i class="fas fa-book-open" style="filter: drop-shadow(0 0 5px rgba(46,213,115,0.5));"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card kpi-card h-100 p-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted text-uppercase fw-bold mb-1" style="font-size: 0.8rem;">Active Members</p>
+                        <h2 class="fw-bolder mb-0" style="color: var(--libris-text-main);">@Model.ActiveMembers</h2>
+                    </div>
+                    <div class="kpi-icon-box icon-members">
+                        <i class="fas fa-users" style="filter: drop-shadow(0 0 5px rgba(16,172,132,0.5));"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card kpi-card h-100 p-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted text-uppercase fw-bold mb-1" style="font-size: 0.8rem;">Currently Borrowed</p>
+                        <h2 class="fw-bolder mb-0" style="color: var(--libris-text-main);">@Model.CurrentlyBorrowed</h2>
+                    </div>
+                    <div class="kpi-icon-box icon-borrows">
+                        <i class="fas fa-hand-holding-heart" style="filter: drop-shadow(0 0 5px rgba(255,165,2,0.5));"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card kpi-card h-100 p-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted text-uppercase fw-bold mb-1" style="font-size: 0.8rem;">Overdue Returns</p>
+                        <h2 class="fw-bolder mb-0" style="color: var(--libris-text-main);">@Model.OverdueReturns</h2>
+                    </div>
+                    <div class="kpi-icon-box icon-alerts">
+                        <i class="fas fa-exclamation-triangle" style="filter: drop-shadow(0 0 5px rgba(255,71,87,0.5));"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-lg-8 mb-4">
+            <div class="card kpi-card h-100">
+                <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4">
+                    <h6 class="fw-bold text-uppercase" style="color: var(--libris-sidebar-bg);">Catalog Distribution by Genre</h6>
+                </div>
+                <div class="card-body p-4">
+                    <div class="chart-container">
+                        <canvas id="genreChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+            <div class="card kpi-card h-100">
+                <div class="card-header bg-transparent border-bottom-0 pt-4 pb-0 px-4">
+                    <h6 class="fw-bold text-uppercase" style="color: var(--libris-sidebar-bg);">Circulation Status</h6>
+                </div>
+                <div class="card-body p-4 d-flex justify-content-center align-items-center">
+                    <div class="chart-container" style="height: 250px;">
+                        <canvas id="statusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const neonMint = 'rgba(46, 213, 115, 1)';
+        const neonMintAlpha = 'rgba(46, 213, 115, 0.2)';
+        const neonForest = 'rgba(16, 172, 132, 1)';
+        const neonWarning = 'rgba(255, 165, 2, 1)';
+        const paleBg = 'rgba(226, 232, 229, 0.5)';
+
+        const genreLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.GenreLabels));
+        const genreData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.GenreData));
+
+        const ctxGenre = document.getElementById('genreChart').getContext('2d');
+        let gradient = ctxGenre.createLinearGradient(0, 0, 0, 300);
+        gradient.addColorStop(0, neonMintAlpha);
+        gradient.addColorStop(1, 'rgba(255,255,255,0)');
+
+        new Chart(ctxGenre, {
+        type: 'bar',
+        data: {
+        labels: genreLabels,
+        datasets: [{
+        label: 'Number of Books',
+        data: genreData,
+        backgroundColor: gradient,
+        borderColor: neonForest,
+        borderWidth: 2,
+        borderRadius: 6,
+        hoverBackgroundColor: neonMint
+        }]
+        },
+        options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+        legend: { display: false }
+        },
+        scales: {
+        y: {
+        beginAtZero: true,
+        grid: { color: paleBg, borderDash: [5, 5] },
+        border: { display: false }
+        },
+        x: {
+        grid: { display: false },
+        border: { display: false }
+        }
+        }
+        }
+        });
+
+        const availableCount = @Model.AvailableBooks;
+        const borrowedCount = @Model.BorrowedBooks;
+
+        const ctxStatus = document.getElementById('statusChart').getContext('2d');
+        new Chart(ctxStatus, {
+        type: 'doughnut',
+        data: {
+        labels: ['Available', 'Borrowed'],
+        datasets: [{
+        data: [availableCount, borrowedCount],
+        backgroundColor: [
+        neonForest,
+        neonWarning
+        ],
+        borderWidth: 0,
+        hoverOffset: 10
+        }]
+        },
+        options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '75%',
+        plugins: {
+        legend: {
+        position: 'bottom',
+        labels: {
+        padding: 20,
+        usePointStyle: true,
+        pointStyle: 'circle'
+        }
+        }
+        }
+        }
+        });
+
+        document.getElementById('btnGenerateReport').addEventListener('click', function () {
+        const element = document.getElementById('dashboard-content');
+
+        const opt = {
+        margin:       0.5,
+        filename:     'Libris_System_Report.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true },
+        jsPDF:        { unit: 'in', format: 'a4', orientation: 'landscape' }
+        };
+
+        html2pdf().set(opt).from(element).save();
+        });
+        });
+    </script>
+}

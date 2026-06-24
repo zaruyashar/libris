@@ -1,0 +1,63 @@
+﻿@using LIBRISMVC.ViewModels
+@model BorrowRecordViewModel
+@{
+    ViewData["Title"] = "Edit Borrow Record";
+}
+
+<div class="mt-4 mb-4">
+    <h1 class="h3 fw-bold mb-1" style="color: var(--libris-sidebar-bg);">Edit Record</h1>
+    <a asp-action="Index" class="text-decoration-none text-muted"><i class="fas fa-arrow-left me-1"></i> Back to Directory</a>
+</div>
+
+<div class="card table-card col-lg-8 mb-4">
+    <div class="card-body p-4">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <input type="hidden" asp-for="BorrowId" />
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="BookId" class="form-label fw-semibold">Book *</label>
+                    <select asp-for="BookId" class="form-select" asp-items="ViewBag.Books" required>
+                        <option value="">-- Select Book --</option>
+                    </select>
+                    <span asp-validation-for="BookId" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="MemberId" class="form-label fw-semibold">Member *</label>
+                    <select asp-for="MemberId" class="form-select" asp-items="ViewBag.Members" required>
+                        <option value="">-- Select Member --</option>
+                    </select>
+                    <span asp-validation-for="MemberId" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="BorrowedAt" class="form-label fw-semibold">Borrow Date *</label>
+                    <input asp-for="BorrowedAt" class="form-control" type="date" required />
+                    <span asp-validation-for="BorrowedAt" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="ReturnedAt" class="form-label fw-semibold">Return Date</label>
+                    <input asp-for="ReturnedAt" class="form-control" type="date" />
+                    <span asp-validation-for="ReturnedAt" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <hr class="mb-4" style="border-color: var(--libris-border);" />
+
+            <div class="d-flex justify-content-end gap-2">
+                <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Update Record</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,56 @@
+﻿@using LIBRISMVC.ViewModels
+@model MemberViewModel
+@{
+    ViewData["Title"] = "Edit Member";
+}
+
+<div class="mt-4 mb-4">
+    <h1 class="h3 fw-bold mb-1" style="color: var(--libris-sidebar-bg);">Edit Member</h1>
+    <a asp-action="Index" class="text-decoration-none text-muted"><i class="fas fa-arrow-left me-1"></i> Back to Directory</a>
+</div>
+
+<div class="card table-card col-lg-8 mb-4">
+    <div class="card-body p-4">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <input type="hidden" asp-for="MemberId" />
+
+            <div class="mb-3">
+                <label asp-for="FullName" class="form-label fw-semibold">Full Name *</label>
+                <input asp-for="FullName" class="form-control" required />
+                <span asp-validation-for="FullName" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label fw-semibold">Email Address *</label>
+                <input asp-for="Email" type="email" class="form-control" required />
+                <span asp-validation-for="Email" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3 w-50">
+                <label asp-for="MemberSince" class="form-label fw-semibold">Member Since *</label>
+                <input asp-for="MemberSince" class="form-control" type="date" required />
+                <span asp-validation-for="MemberSince" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-4 form-check form-switch">
+                <input asp-for="IsActive" class="form-check-input" type="checkbox" role="switch" id="isActiveSwitch">
+                <label class="form-check-label" for="isActiveSwitch">Member is Active</label>
+            </div>
+
+            <hr class="mb-4" style="border-color: var(--libris-border);" />
+
+            <div class="d-flex justify-content-end gap-2">
+                <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Update Member</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

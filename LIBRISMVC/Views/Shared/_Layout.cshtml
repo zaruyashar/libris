@@ -94,6 +94,44 @@
         });
         }
         });
+    
+
+        document.addEventListener("DOMContentLoaded", function () {
+        // Sayfadaki 'libris-datatable' class'ına sahip tüm tabloları bul
+        const tables = document.querySelectorAll('.libris-datatable');
+
+
+        tables.forEach(tableElement => {
+        // Her bir tablo için DataTable örneği oluştur
+        const dataTable = new simpleDatatables.DataTable(tableElement, {
+        searchable: true,
+        sortable: true,
+        perPage: 10,
+        perPageSelect: [5, 10, 15, 20, 50],
+        labels: {
+        placeholder: "Search records...",
+        perPage: "entries",
+        noRows: "No records found in the database",
+        info: "Showing {start} to {end} of {rows} entries"
+        }
+        });
+
+
+        // Tablonun DOM'a yerleşmesini bekleyip arama kutusu listener'larını ekliyoruz
+        dataTable.on('datatable.init', function() {
+        const searchInput = tableElement.closest('.dataTable-wrapper').querySelector('.dataTable-input');
+        if (searchInput) {
+        ['input', 'search'].forEach(eventType => {
+        searchInput.addEventListener(eventType, function (e) {
+        if (e.target.value.trim() === '') {
+        dataTable.search('');
+        }
+        });
+        });
+        }
+        });
+        });
+        });
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)
