@@ -31,7 +31,11 @@ Building a standalone RESTful Web API and consuming it via an MVC client opened 
 ## 📸 Feature Highlights
 
 ### Dynamic Dashboard & Instant Reporting
-Features real-time KPI tracking and interactive data visualization using Chart.js. With a single click, the glowing neon "Generate Report" button instantly compiles the active DOM into a clean PDF snapshot.
+Features real-time KPI tracking and interactive data visualization using Chart.js. [cite_start]With a single click, the glowing neon "Generate Report" button instantly compiles the active dashboard view into a clean, professional PDF snapshot.
+
+![Libris Snapshot Report]
+<img width="3069" height="1917" alt="6" src="https://github.com/user-attachments/assets/66e0bfcd-e6ed-437c-a66a-24582032c870" />
+
 
 ![Add New Member]
 <img width="3069" height="1917" alt="2" src="https://github.com/user-attachments/assets/d0fac54b-02a0-4998-a9f7-365185199197" />
