@@ -1,0 +1,217 @@
+:root {
+    --libris-sidebar-bg: #2d4a3e;
+    --libris-sidebar-active: #3b6354;
+    --libris-accent: #a8d0b6;
+    --libris-accent-hover: #8fba9e;
+    --libris-danger: #c85a47;
+    --libris-danger-hover: #b04b3a;
+    --libris-page-bg: #f5f7f6;
+    --libris-card-bg: #ffffff;
+    --libris-text-main: #2c3e35;
+    --libris-text-muted: #6e8277;
+    --libris-border: #e2e8e5;
+}
+
+body.app-shell {
+    background-color: var(--libris-page-bg);
+    color: var(--libris-text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding-top: 60px;
+    padding-left: 250px;
+    transition: padding-left 0.3s ease-in-out;
+}
+
+body.sb-sidenav-toggled {
+    padding-left: 0;
+}
+
+.app-topnav {
+    height: 60px;
+    background-color: var(--libris-card-bg);
+    border-bottom: 1px solid var(--libris-border);
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+}
+
+.sidenav-toggle {
+    background: none;
+    border: none;
+    color: var(--libris-sidebar-bg);
+    font-size: 1.25rem;
+    cursor: pointer;
+}
+
+.app-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--libris-sidebar-bg);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: 0.5px;
+}
+
+.topnav-actions .topnav-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--libris-text-main);
+}
+
+.topnav-profile .avatar {
+    width: 36px;
+    height: 36px;
+    background-color: var(--libris-accent);
+    color: var(--libris-sidebar-bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.app-sidenav {
+    width: 250px;
+    background-color: var(--libris-sidebar-bg);
+    position: fixed;
+    top: 60px;
+    bottom: 0;
+    left: 0;
+    z-index: 1020;
+    overflow-y: auto;
+    transition: transform 0.3s ease-in-out;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+body.sb-sidenav-toggled .app-sidenav {
+    transform: translateX(-100%);
+}
+
+.sidenav-heading {
+    padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.sidenav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    gap: 1rem;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.sidenav-link:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.sidenav-link.active {
+    color: #ffffff;
+    background-color: var(--libris-sidebar-active);
+    border-left: 4px solid var(--libris-accent);
+}
+
+.btn-primary {
+    background-color: var(--libris-accent);
+    border-color: var(--libris-accent);
+    color: var(--libris-sidebar-bg);
+    font-weight: 600;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--libris-accent-hover);
+    border-color: var(--libris-accent-hover);
+    color: var(--libris-sidebar-bg);
+}
+
+.btn-outline-primary {
+    color: var(--libris-sidebar-bg);
+    border-color: var(--libris-accent);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--libris-accent);
+    color: var(--libris-sidebar-bg);
+}
+
+.btn-danger {
+    background-color: var(--libris-danger);
+    border-color: var(--libris-danger);
+}
+
+.btn-danger:hover, .btn-danger:focus {
+    background-color: var(--libris-danger-hover);
+    border-color: var(--libris-danger-hover);
+}
+
+.btn-outline-danger {
+    color: var(--libris-danger);
+    border-color: var(--libris-danger);
+}
+
+.btn-outline-danger:hover {
+    background-color: var(--libris-danger);
+    color: white;
+}
+
+.table-card {
+    background-color: var(--libris-card-bg);
+    border: 1px solid var(--libris-border);
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.02);
+    overflow: hidden;
+}
+
+.table-card .table {
+    margin-bottom: 0;
+}
+
+.table-card thead th {
+    background-color: var(--libris-page-bg);
+    color: var(--libris-text-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-bottom: 2px solid var(--libris-border);
+    padding: 1rem 1.25rem;
+}
+
+.table-card tbody td {
+    padding: 1rem 1.25rem;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--libris-border);
+    color: var(--libris-text-main);
+}
+
+.status-badge {
+    padding: 0.35rem 0.65rem;
+    border-radius: 50rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.status-active {
+    background-color: rgba(168, 208, 182, 0.2);
+    color: var(--libris-sidebar-bg);
+}
+
+.status-inactive {
+    background-color: rgba(200, 90, 71, 0.1);
+    color: var(--libris-danger);
+}

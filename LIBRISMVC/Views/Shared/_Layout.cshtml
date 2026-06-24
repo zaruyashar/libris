@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>@ViewData["Title"] - Libris Admin</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="~/css/libris-theme.css" rel="stylesheet" />
+</head>
+<body class="app-shell">
+
+    <nav class="app-topnav">
+        <button class="sidenav-toggle" id="sidenavToggle" type="button" aria-label="Toggle sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <a class="app-brand" asp-controller="Dashboard" asp-action="Index">
+            <span class="brand-mark"><i class="fas fa-book-open"></i></span>
+            <span style="letter-spacing: 0.15rem;">LIBRIS</span>
+        </a>
+
+        <div class="topnav-actions">
+            <div class="dropdown">
+                <a class="topnav-profile" href="#" role="button" data-bs-toggle="dropdown">
+                    <span class="avatar">LA</span>
+                    <span class="d-none d-lg-block">
+                        <span class="profile-name d-block">Libris Admin</span>
+                        <span class="profile-role d-block">Head Librarian</span>
+                    </span>
+                    <i class="fas fa-chevron-down d-none d-lg-inline" style="font-size: 0.7rem;"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark-soft">
+                    <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fas fa-gear me-2"></i>Settings</a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li><a class="dropdown-item" href="#"><i class="fas fa-right-from-bracket me-2"></i>Sign out</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <nav class="app-sidenav">
+        <div class="sidenav-scroll">
+
+            <div class="sidenav-heading">Overview</div>
+            <a class="sidenav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Dashboard" ? "active" : "")" asp-controller="Dashboard" asp-action="Index">
+                <i class="fas fa-chart-line"></i><span>Dashboard</span>
+            </a>
+
+            <div class="sidenav-heading">Catalog Management</div>
+            <a class="sidenav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Authors" ? "active" : "")" asp-controller="Author" asp-action="Index">
+                <i class="fas fa-pen-nib"></i><span>Authors</span>
+            </a>
+            <a class="sidenav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Genres" ? "active" : "")" asp-controller="Genre" asp-action="Index">
+                <i class="fas fa-tags"></i><span>Genres</span>
+            </a>
+            <a class="sidenav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Books" ? "active" : "")" asp-controller="Book" asp-action="Index">
+                <i class="fas fa-book"></i><span>Books</span>
+            </a>
+
+            <div class="sidenav-heading">Circulation</div>
+            <a class="sidenav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Members" ? "active" : "")" asp-controller="Member" asp-action="Index">
+                <i class="fas fa-users"></i><span>Members</span>
+            </a>
+            <a class="sidenav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "BorrowRecords" ? "active" : "")" asp-controller="BorrowRecord" asp-action="Index">
+                <i class="fas fa-clipboard-list"></i><span>Borrow Records</span>
+            </a>
+
+        </div>
+    </nav>
+
+    <main class="app-content">
+        <div class="container-fluid p-4">
+            @RenderBody()
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        const sidenavToggle = document.body.querySelector('#sidenavToggle');
+        if (sidenavToggle) {
+        sidenavToggle.addEventListener('click', event => {
+        event.preventDefault();
+        document.body.classList.toggle('sb-sidenav-toggled');
+        });
+        }
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

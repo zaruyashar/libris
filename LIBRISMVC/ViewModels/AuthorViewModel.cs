@@ -1,7 +1,9 @@
-﻿namespace LIBRIS.DTOs
+﻿namespace LIBRISMVC.ViewModels
 {
-    public class AuthorCreateDto
+    public class AuthorViewModel
     {
+        public int AuthorId { get; set; }
+
         public required string FullName { get; set; }
 
         public string? Nationality { get; set; }

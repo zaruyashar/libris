@@ -1,6 +1,6 @@
-﻿namespace LIBRIS.DTOs
+﻿namespace LIBRISMVC.ViewModels
 {
-    public class GenreReadDto
+    public class GenreViewModel
     {
         public int GenreId { get; set; }
 
