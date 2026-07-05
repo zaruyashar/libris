@@ -1,16 +1,8 @@
 # 📚 LIBRIS 
 <img width="3033" height="1917" alt="1" src="https://github.com/user-attachments/assets/bf648b9f-ceef-4f1a-8eca-fcf933f9a1ca" />
 
-
 > *A decoupled library management system featuring a .NET 8 Web API consumed by an MVC frontend. Built with Code-First Entity Framework, it leverages custom DTOs and Newtonsoft JSON for secure data transfer and robust admin CRUD operations. The system is secured end-to-end with ASP.NET Core Identity — the API owns the credential store and issues stateless auth verdicts, while the MVC client manages the actual browser session via cookie authentication.*
 
-## 🚀 The Development Journey
-
-As the 7th milestone in my Softito learning archive, **LIBRIS** represents a massive leap in architectural design. Moving beyond monolithic structures, this project implements a clean separation of concerns by completely decoupling the user interface from the data access layer. 
-
-Building a standalone RESTful Web API and consuming it via an MVC client opened up an entirely new dimension of software development. By strictly utilizing **Data Transfer Objects (DTOs)**, the application ensures that internal database models are never directly exposed to the presentation layer, resulting in highly secure, scalable, and professional-grade code.
-
-Beyond the CRUD and reporting layers, LIBRIS was also where I tackled a genuinely new architectural question: in a decoupled API/MVC system, which layer should own authentication? The answer — the layer that owns the user data — meant giving the API project full ASP.NET Core Identity integration (UserManager, SignInManager, hashed credentials), while the MVC client calls those endpoints over HTTP and only concerns itself with issuing and validating its own browser cookie. It's a small distinction on paper, but it's the difference between bolting auth onto whichever project is easiest and actually respecting the separation of concerns the rest of this project was built around.
 
 ## 🛠️ Tech Stack & Architecture
 
@@ -29,6 +21,12 @@ Beyond the CRUD and reporting layers, LIBRIS was also where I tackled a genuinel
 * **Libraries:** Chart.js (Data Visualization), Simple-Datatables, html2pdf.js (Snapshot Reporting)
 
 ---
+
+## ⚖️ Architectural Trade-off: Why .NET 8 and Swagger, Not Scalar
+
+LIBRIS is deliberately pinned to .NET 8, and its API documentation deliberately uses Swashbuckle/Swagger UI rather than Scalar, which I adopted in later projects in this archive. This wasn't an oversight — it was the point of the exercise.
+
+Microsoft has shifted its default recommendation toward Scalar for newer .NET versions, and Swashbuckle's support doesn't extend cleanly past .NET 8. It would have been easy to just follow that shift across every project. But Swagger UI has been the industry-standard API documentation tool for years, and a huge number of production systems — especially on client premises, in enterprise environments, or in codebases that haven't been touched since before Scalar existed — are still running on it. If I only ever built against the newest tooling, I'd be optimizing my portfolio for greenfield projects and leaving a real gap in what I could walk into on day one of a job. So LIBRIS exists specifically to make sure I've actually built and shipped something against Swagger, not just read about it — deliberately choosing the "older" stack here so that later projects could deliberately choose the newer one, rather than defaulting to whatever's newest by accident in every project.
 
 ## 📸 Feature Highlights
 
