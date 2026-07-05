@@ -1,9 +1,10 @@
-﻿using LIBRIS.Models;
+using LIBRIS.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace LIBRIS.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -15,5 +16,10 @@ namespace LIBRIS.Data
         public DbSet<BorrowRecord> BorrowRecords { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Member> Members { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
     }
 }

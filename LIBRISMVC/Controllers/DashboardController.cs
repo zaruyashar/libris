@@ -1,9 +1,11 @@
 using LIBRISMVC.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
 namespace LIBRISMVC.Controllers
 {
+    [Authorize]
     public class DashboardController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;

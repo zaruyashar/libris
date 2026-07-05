@@ -1,4 +1,5 @@
-﻿using LIBRISMVC.ViewModels;
+using LIBRISMVC.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Text.Json;
 
 namespace LIBRISMVC.Controllers
 {
+    [Authorize]
     public class BookController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;

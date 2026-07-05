@@ -1,10 +1,12 @@
-﻿using LIBRISMVC.ViewModels;
+using LIBRISMVC.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
 
 namespace LIBRISMVC.Controllers
 {
+    [Authorize]
     public class MemberController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;

@@ -1,0 +1,60 @@
+@using LIBRISMVC.ViewModels
+@model AccountDetailsViewModel
+@{
+    ViewData["Title"] = "Account Details";
+}
+
+<div class="mt-4 mb-4">
+    <h1 class="h3 fw-bold mb-1" style="color: var(--libris-sidebar-bg);">Account Details</h1>
+    <span class="text-muted">Manage your profile information and email address</span>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success col-lg-8 mb-4" role="alert">
+        <i class="fas fa-circle-check me-2"></i>@TempData["SuccessMessage"]
+    </div>
+}
+
+<div class="card table-card col-lg-8 mb-4">
+    <div class="card-body p-4">
+        <form asp-action="AccountDetails" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <input type="hidden" asp-for="CurrentEmail" />
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Current Login Email</label>
+                <input class="form-control" type="text" value="@Model.CurrentEmail" disabled style="background-color: var(--libris-page-bg); opacity: 0.85;" />
+                <small class="text-muted">Used to sign in. This cannot be modified unless updating to a new email below.</small>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="NewFullName" class="form-label fw-semibold">Full Name</label>
+                <input asp-for="NewFullName" class="form-control" placeholder="e.g. Libris Admin" required />
+                <span asp-validation-for="NewFullName" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="NewEmail" class="form-label fw-semibold">New Email Address</label>
+                <input asp-for="NewEmail" class="form-control" placeholder="e.g. newemail@libris.com" required />
+                <span asp-validation-for="NewEmail" class="text-danger small"></span>
+                <small class="text-muted">Changing this will update your username and require you to sign in with the new email next time.</small>
+            </div>
+
+            <hr class="mb-4" style="border-color: var(--libris-border);" />
+
+            <div class="d-flex justify-content-end gap-2">
+                <a asp-controller="Dashboard" asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

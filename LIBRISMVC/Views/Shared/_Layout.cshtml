@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,22 +25,54 @@
         </a>
 
         <div class="topnav-actions">
-            <div class="dropdown">
-                <a class="topnav-profile" href="#" role="button" data-bs-toggle="dropdown">
-                    <span class="avatar">LA</span>
-                    <span class="d-none d-lg-block">
-                        <span class="profile-name d-block">Libris Admin</span>
-                        <span class="profile-role d-block">Head Librarian</span>
-                    </span>
-                    <i class="fas fa-chevron-down d-none d-lg-inline" style="font-size: 0.7rem;"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark-soft">
-                    <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
-                    <li><a class="dropdown-item" href="#"><i class="fas fa-gear me-2"></i>Settings</a></li>
-                    <li><hr class="dropdown-divider" /></li>
-                    <li><a class="dropdown-item" href="#"><i class="fas fa-right-from-bracket me-2"></i>Sign out</a></li>
-                </ul>
-            </div>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                var userName = User.Identity.Name ?? "Libris Admin";
+                var userEmail = User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value ?? "";
+                var initials = "LA";
+                if (!string.IsNullOrEmpty(userName))
+                {
+                    var parts = userName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                    if (parts.Length > 1) initials = (parts[0][0].ToString() + parts[1][0].ToString()).ToUpper();
+                    else if (parts.Length > 0 && parts[0].Length > 0) initials = parts[0][0].ToString().ToUpper();
+                }
+
+                <div class="dropdown">
+                    <a class="topnav-profile" href="#" role="button" data-bs-toggle="dropdown">
+                        <span class="avatar">@initials</span>
+                        <span class="d-none d-lg-block">
+                            <span class="profile-name d-block">@userName</span>
+                            <span class="profile-role d-block">@userEmail</span>
+                        </span>
+                        <i class="fas fa-chevron-down d-none d-lg-inline" style="font-size: 0.7rem;"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark-soft shadow" style="background-color: #1a2a22; border: 1px solid var(--libris-border);">
+                        <li>
+                            <div class="px-3 py-2 text-white">
+                                <small class="text-muted d-block" style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px;">Logged in as</small>
+                                <strong>@userName</strong>
+                                <span class="d-block text-muted" style="font-size: 0.75rem;">@userEmail</span>
+                            </div>
+                        </li>
+                        <li><hr class="dropdown-divider" style="background-color: rgba(255,255,255,0.15);" /></li>
+                        <li><a class="dropdown-item text-white-50" asp-controller="Account" asp-action="AccountDetails"><i class="fas fa-user me-2"></i>Account Details</a></li>
+                        <li><a class="dropdown-item text-white-50" asp-controller="Account" asp-action="ManageChangePassword"><i class="fas fa-key me-2"></i>Change Password</a></li>
+                        <li><hr class="dropdown-divider" style="background-color: rgba(255,255,255,0.15);" /></li>
+                        <li>
+                            <form asp-controller="Account" asp-action="Logout" method="post" id="logoutFormNavbar" style="display:inline;">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="dropdown-item text-danger d-flex align-items-center" style="background: none; border: none; width: 100%; text-align: left;">
+                                    <i class="fas fa-right-from-bracket me-2"></i>Sign out
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <a class="btn btn-primary btn-sm" asp-controller="Account" asp-action="Login">Sign In</a>
+            }
         </div>
     </nav>
 
